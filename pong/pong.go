@@ -5,42 +5,34 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
-	"time"
 )
 
 var (
-	successCount int
-	mu           sync.Mutex
+	pongCount int
+	mu        sync.Mutex
 )
 
-func pingPong() {
-	for {
-		resp, err := http.Post("http://dogebox:8082/pong/ping", "application/json", nil)
-		if err == nil && resp.StatusCode == http.StatusOK {
-			var result map[string]bool
-			if err := json.NewDecoder(resp.Body).Decode(&result); err == nil && result["pong"] {
-				mu.Lock()
-				successCount++
-				mu.Unlock()
-			}
-			resp.Body.Close()
-		}
-		time.Sleep(5 * time.Second)
+func handlePing(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		mu.Lock()
+		pongCount++
+		mu.Unlock()
+		json.NewEncoder(w).Encode(map[string]bool{"pong": true})
 	}
 }
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
-	count := successCount
+	count := pongCount
 	mu.Unlock()
-	fmt.Fprintf(w, "Ping Success Count: %d", count)
+	fmt.Fprintf(w, "Pong Count: %d", count)
 }
 
 func main() {
-	go pingPong()
-
+	http.HandleFunc("/ping", handlePing)
 	http.HandleFunc("/", handleIndex)
-	fmt.Println("Ping server starting on :8080")
+
+	fmt.Println("Pong server starting on :8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		panic(err)
 	}
