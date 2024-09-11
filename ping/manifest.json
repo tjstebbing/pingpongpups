@@ -1,0 +1,47 @@
+{
+  "manifestVersion": 1,
+  "meta": {
+    "name": "ping",
+    "version": "0.0.1",
+    "logoPath": "",
+    "shortDescription": "Ping pings pong and reports pong's pings",
+    "longDescription": "If Peter Piper Picked a Peck of Pickled Peppers, how many Pickled Peppers did Peter Piper Pick?"
+  },
+  "config": {
+    "sections": null
+  },
+  "container": {
+    "build": {
+      "nixFile": "pup.nix",
+      "nixFileSha256": "bff3989768aef66ef2dfb4fec8027ffd0a23269f49a2d67ce90de197eeae474b"
+    },
+    "services": [
+      {
+        "name": "ping",
+        "command": {
+          "exec": "/bin/ping",
+          "cwd": "",
+          "env": null
+        }
+      }
+    ],
+    "exposes": [
+      {
+        "type": "admin",
+        "trafficType": "http",
+        "port": 8080,
+        "interfaces": []
+      }
+    ]
+  },
+  "interfaces": [],
+  "dependencies": [
+    {
+      "interfaceName": "pingpong",
+      "interfaceVersion": "0.0.1",
+      "permissionGroups": [
+        "pingme"
+      ]
+    }
+  ]
+}

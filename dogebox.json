@@ -1,0 +1,13 @@
+{
+  "id": "tjstebbing-test-pups",
+  "name": "Timothy's Test Pups",
+  "description": "Demo Pups that talk to eachother",
+  "pups": [
+    {
+      "location": "ping"
+    },
+    {
+      "location": "pong"
+    }
+  ]
+}
