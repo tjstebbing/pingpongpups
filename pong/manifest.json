@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "meta": {
     "name": "pong",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "logoPath": "",
     "shortDescription": "Pong gets pinged by ping and pongs back",
     "longDescription": "Mary, Mary, quite contrary, how does your garden grow?"
@@ -13,7 +13,7 @@
   "container": {
     "build": {
       "nixFile": "pup.nix",
-      "nixFileSha256": "3dd606a63839479b587a50c6dc985788c489b88304c0f03d48d066d3493b4d2b"
+      "nixFileSha256": "798d86e132a53adce05b4eeaedd09f6b3bee68a56e185267fde3d505054d7ced"
     },
     "services": [
       {

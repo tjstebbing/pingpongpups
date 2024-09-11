@@ -1,7 +1,7 @@
 { pkgs }:
 
 let
-  server1 = pkgs.stdenv.mkDerivation {
+  pong = pkgs.stdenv.mkDerivation {
     name = "pong";
     version = "1.0";
 
@@ -25,5 +25,5 @@ let
   };
 in
 {
-  inherit server1;
+  inherit pong;
 }
