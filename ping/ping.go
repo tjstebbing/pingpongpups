@@ -74,8 +74,6 @@ func postMetrics() {
 }
 
 func handleIndex(w http.ResponseWriter, r *http.Request) {
-	mu.Lock()
-	defer mu.Unlock()
 	fmt.Fprintf(w, "Ping Success Count: %d\nPPM: %.2f", successCount, ppm)
 }
 
