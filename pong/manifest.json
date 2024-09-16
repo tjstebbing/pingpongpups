@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "meta": {
     "name": "pong",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "logoPath": "",
     "shortDescription": "Pong gets pinged by ping and pongs back",
     "longDescription": "Mary, Mary, quite contrary, how does your garden grow?"

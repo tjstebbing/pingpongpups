@@ -15,7 +15,7 @@ var (
 
 func pingPong() {
 	for {
-		resp, err := http.Post("http://dogebox:8082/pong/ping", "application/json", nil)
+		resp, err := http.Post("http://dogebox:8082/pingpong/ping", "application/json", nil)
 		if err == nil && resp.StatusCode == http.StatusOK {
 			var result map[string]bool
 			if err := json.NewDecoder(resp.Body).Decode(&result); err == nil && result["pong"] {
