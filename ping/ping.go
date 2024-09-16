@@ -5,16 +5,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"sync"
 	"time"
 )
 
 var (
-	successCount      int
-	mu                sync.Mutex
-	ppm               float64
-	lastPingTimestamp time.Time
+	successCount int
+	failureCount int
+	ppm          float64
+	fpm          int
 )
+
+var target string = "http://dogebox:8082/pingpong/ping"
 
 func pingPong() {
 	ppmTicker := time.NewTicker(1 * time.Minute)
@@ -26,28 +27,21 @@ func pingPong() {
 		select {
 		case <-ppmTicker.C:
 			// Calculate PPM
-			mu.Lock()
-			interval := time.Since(lastPingTimestamp).Minutes()
-			if interval > 0 {
-				ppm = float64(successCount) / interval
-			} else {
-				ppm = 0
-			}
+			ppm = float64(successCount)
+			fpm = failureCount
 			successCount = 0
-			lastPingTimestamp = time.Now()
-			mu.Unlock()
-			// Post PPM to dogebox metrics endpoint in a new goroutine
-			go postPPMToMetrics()
+			failureCount = 0
+			// Post dogebox metrics
+			go postMetrics()
 		case <-pingTicker.C:
 			// Send ping
-			resp, err := http.Post("http://dogebox:8082/pingpong/ping", "application/json", nil)
+			resp, err := http.Post(target, "application/json", nil)
 			if err == nil && resp.StatusCode == http.StatusOK {
 				var result map[string]bool
 				if err := json.NewDecoder(resp.Body).Decode(&result); err == nil && result["pong"] {
-					mu.Lock()
 					successCount++
-					lastPingTimestamp = time.Now()
-					mu.Unlock()
+				} else {
+					failureCount++
 				}
 				resp.Body.Close()
 			}
@@ -55,9 +49,11 @@ func pingPong() {
 	}
 }
 
-func postPPMToMetrics() {
-	data := map[string]map[string]float64{
-		"ppm": {"value": ppm},
+func postMetrics() {
+	data := map[string]map[string]any{
+		"ppm":    {"value": ppm},
+		"fpm":    {"value": fpm},
+		"target": {"value": target},
 	}
 	jsonData, err := json.Marshal(data)
 	if err != nil {

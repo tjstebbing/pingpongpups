@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "meta": {
     "name": "ping",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "logoPath": "",
     "shortDescription": "Ping pings pong and reports pong's pings",
     "longDescription": "If Peter Piper Picked a Peck of Pickled Peppers, how many Pickled Peppers did Peter Piper Pick?"
@@ -40,6 +40,18 @@
       "label": "Successful pings per minute",
       "type": "float",
       "history": 30
+    },
+    {
+      "name": "fpm",
+      "label": "Failures per minute",
+      "type": "int",
+      "history": 30
+    },
+    {
+      "name": "target",
+      "label": "Ping target",
+      "type": "string",
+      "history": 1
     }
   ],
   "interfaces": [],
