@@ -15,7 +15,7 @@ var (
 	fpm          int
 )
 
-var target string = "http://dogebox:8082/pingpong/ping"
+var target string = "http://dogebox/pingpong/ping"
 
 func pingPong() {
 	ppmTicker := time.NewTicker(1 * time.Minute)
@@ -61,7 +61,7 @@ func postMetrics() {
 		return
 	}
 
-	resp, err := http.Post("http://dogebox:8082/dbx/metrics", "application/json", bytes.NewBuffer(jsonData))
+	resp, err := http.Post("http://dogebox/dbx/metrics", "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Println("Error posting metrics:", err)
 		return
