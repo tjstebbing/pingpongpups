@@ -30,6 +30,7 @@
         "name": "admin",
         "type": "http",
         "port": 8080,
+        "webUI": true,
         "interfaces": []
       }
     ]

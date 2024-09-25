@@ -30,7 +30,10 @@
         "name": "admin",
         "type": "http",
         "port": 8080,
-        "interfaces": ["pingpong"]
+        "webUI": true,
+        "interfaces": [
+          "pingpong"
+        ]
       }
     ]
   },
@@ -43,7 +46,9 @@
           "name": "pingme",
           "description": "Pingme permission allows access to call the ping API",
           "severity": 3,
-          "routes": ["/ping"]
+          "routes": [
+            "/ping"
+          ]
         }
       ]
     }
